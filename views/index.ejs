@@ -2,10 +2,18 @@
 <html>
   <head>
     <title><%= title %></title>
+    <script language="javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+        <h1 class="title"><%= title %></h1>
+        <p>Hello World</p>
+      </div>
+    </div>
+    </div>
   </body>
 </html>
