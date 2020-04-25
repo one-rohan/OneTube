@@ -1,6 +1,18 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Pathway Gothic One', sans-serif;
+  background-color: #020b1a;
+  color: white;
+}
+
+.header img {
+  width: 80px;
+}
+
+.header .title {
+    margin: 15px;
+    letter-spacing: -3px;
+    margin-left: 10px;
 }
 
 a {
