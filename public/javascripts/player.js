@@ -14,14 +14,16 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerReady(e) {
-  player.loadVideoById("",0);  
+  player.loadVideoById("GB_S2qFh5lU",0);  
   e.target.playVideo();
 }
 
 function onPlayerStateChange(e) {
-    console.log(e.data);
+    socket.emit("stateChanged", {data: e.data});
 }
 
-socket.on("new", (data) => {
-  window.alert(data.hello);
+socket.on("updateState", (state) => {
+  console.log(state);
+  if(state.data === 2)
+      player.pauseVideo();
 });

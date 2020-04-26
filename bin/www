@@ -27,8 +27,12 @@ var io = require('socket.io')(server);
 io.listen(server);
 io.on('connection', function (socket) {
   console.log("connected");  
-  socket.emit("new", {hello: "hellos"});
+  socket.on("stateChanged", (state) => {
+    console.log(state);
+    socket.broadcast.emit("updateState", state);
+  });
 });
+
 
 /**
  * Listen on provided port, on all network interfaces.
