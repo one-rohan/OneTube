@@ -1,4 +1,5 @@
 var player;
+const socket = io.connect("//localhost:3000/");
 
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
@@ -13,10 +14,14 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerReady(e) {
-  player.loadVideoById("U77d9912lrw",0);  
+  player.loadVideoById("",0);  
   e.target.playVideo();
 }
 
 function onPlayerStateChange(e) {
     console.log(e.data);
 }
+
+socket.on("new", (data) => {
+  window.alert(data.hello);
+});
