@@ -27,8 +27,7 @@ var io = require('socket.io')(server);
 io.listen(server);
 io.on('connection', function (socket) {
   console.log("connected");  
-  socket.on("stateChanged", (state) => {
-    console.log(state);
+  socket.on("stateSync", (state) => {
     socket.broadcast.emit("updateState", state);
   });
 });
