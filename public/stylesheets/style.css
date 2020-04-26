@@ -3,9 +3,21 @@ body {
   color: white;
 }
 
+.btn {
+  font-family: 'Pathway Gothic One', sans-serif;
+  border-color: #18151a;
+}
+
+.btn:hover {
+  background-color: #e9190f;
+  color: white;
+  border-color: #e9190f;
+}
+
 .header {
   margin-top: 10px;
   border-bottom: 1px solid white;
+  animation: borderColor 5s infinite;
 }
 
 .header img {
@@ -21,15 +33,39 @@ body {
   font-size: 2rem;
 }
 
-.header button {
-  font-family: 'Pathway Gothic One', sans-serif;
+.header .sync {
   margin-top: 10px;
   margin-bottom: 10px;
   width: 20%;
 }
 
-.header button:hover{
-  background-color: #e9190f;
+.url-input {
+  margin-top: 15px;
+}
+
+.url-input .url-load {
+  width: 10%;
+  margin-left: 10px;
+}
+
+.form-control {
+  background-color: #18151a;
+  border: none;
+}
+
+.form-control:focus {
+  background-color: #18151a;
   color: white;
+  border: 1px solid;
   border-color: #e9190f;
+  box-shadow: none;
+}
+
+@keyframes borderColor {
+  0%   {border-color: red;}
+  20%  {border-color: palevioletred;}
+  40%  {border-color: cyan;}
+  60%  {border-color: orange;}
+  80%  {border-color: purple;}
+  100% {border-color: red;}
 }
