@@ -1,5 +1,5 @@
 var player;
-const socket = io.connect("ws://localhost:3000/");
+const socket = io.connect();
 
 let videoState = {
   videoId: "",
