@@ -1,9 +1,10 @@
 var player;
-const socket = io.connect("//localhost:3000/");
+const socket = io.connect("ws://localhost:3000/");
 
 let videoState = {
-  videoId: "5dmQ3QWpy1Q",
-  state: -1
+  videoId: "",
+  state: -1,
+  time: 0
 };
 
 function onYouTubeIframeAPIReady() {
@@ -14,32 +15,38 @@ function onYouTubeIframeAPIReady() {
     events: {
       'onStateChange': onPlayerStateChange
     },
-    videoId: "5dmQ3QWpy1Q"
+    videoId: ""
   });
 }
 
 function onPlayerStateChange(e) {
-    // socket.emit("stateChanged", {data: e.data});
     videoState.state = e.data;
 }
 
 document.querySelector(".url-load").addEventListener('click', (e) => {
-  e.preventDefault();
   const url = document.querySelector('.url-main').value;
   const vid = url.substr(url.indexOf("=")+1);
   videoState.videoId = vid;
+  socket.emit("loadVideo", videoState);
   player.loadVideoById(vid,0); 
 });
 
 document.querySelector(".sync").addEventListener('click', () => {
+  videoState.time = player.getCurrentTime();
   socket.emit("stateSync", videoState);
 });
 
-socket.on("updateState", (state) => {
-  console.log(state);
+socket.on("loadVideoId", (state) => {
   player.loadVideoById(state.videoId, 0);
+  videoState.videoId = state.videoId;
+});
+
+socket.on("updateState", (state) => {
+  player.seekTo(parseFloat(state.time));
   if(state.state === 1)
     player.playVideo();
   else if(state.state === 2)
     player.pauseVideo();
+  else if(state.state === 0)
+    player.endVideo();
 });

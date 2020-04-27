@@ -21,19 +21,6 @@ app.set('port', port);
 var server = http.createServer(app);
 
 /**
- * Socket.IO Setup
- */
-var io = require('socket.io')(server);
-io.listen(server);
-io.on('connection', function (socket) {
-  console.log("connected");  
-  socket.on("stateSync", (state) => {
-    socket.broadcast.emit("updateState", state);
-  });
-});
-
-
-/**
  * Listen on provided port, on all network interfaces.
  */
 
@@ -100,3 +87,21 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+/**
+ * Socket.IO Setup
+ */
+//server = app.listen(port);
+var io = require('socket.io')(server);
+io.listen(server);
+io.on('connection', function (socket) {
+  console.log("connected");  
+  socket.on("stateSync", (state) => {
+    socket.broadcast.emit("updateState", state);
+  });
+
+  socket.on("loadVideo", (state) => {
+    socket.broadcast.emit("loadVideoId", state);
+  });
+});

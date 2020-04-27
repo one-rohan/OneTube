@@ -20,6 +20,11 @@ body {
   animation: borderColor 5s infinite;
 }
 
+.header .home {
+  color: inherit;
+  text-decoration: none
+}
+
 .header img {
   height: 60px;
   width: 60px;
