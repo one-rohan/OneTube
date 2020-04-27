@@ -74,3 +74,22 @@ body {
   80%  {border-color: purple;}
   100% {border-color: red;}
 }
+
+.chatbox {
+  height: 100%;
+}
+
+.chatbox .user-count {
+  background-color: black;
+}
+
+.chatbox .chat-area {
+  height: 80%;
+}
+
+.chatbox .user-count .card-body {
+  text-align: center;
+  padding: 0.25rem;
+  font-size: 15px;
+  font-family:'Pathway Gothic One', sans-serif;
+}
