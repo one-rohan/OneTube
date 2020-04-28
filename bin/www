@@ -97,8 +97,14 @@ var io = require('socket.io')(server);
 io.listen(server);
 
 var user = 1 ;
+var users = [];
 io.on('connection', function (socket) {
   io.emit("user joined", user++);
+
+  socket.on("user joined chat", (user)=> {
+    users.push(user);
+    socket.broadcast.emit("show new user", user);
+  });
 
   socket.on("stateSync", (state) => {
     socket.broadcast.emit("updateState", state);

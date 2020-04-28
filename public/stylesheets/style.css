@@ -84,7 +84,24 @@ body {
 }
 
 .chatbox .chat-area {
-  height: 80%;
+  height: 320px;
+  overflow: auto;
+}
+
+.chatbox .chat-list {
+  padding: 0;
+}
+
+.chat-area::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-area {
+  -ms-overflow-style: none;
+}
+
+.chatbox .username {
+  font-size: 13px;
 }
 
 .chatbox .user-count .card-body {
@@ -92,4 +109,23 @@ body {
   padding: 0.25rem;
   font-size: 15px;
   font-family:'Pathway Gothic One', sans-serif;
+}
+
+.chatbox .user-joined {
+  text-align: center;
+  color: #e9190f;
+  font-size: 11px;
+  padding: 5px;
+  list-style: none;
+  font-weight: bold;
+}
+
+.chatbox .user-msg {
+  font-size: 13px;
+  list-style: none;
+  word-break: break-all;
+}
+
+.chatbox .name {
+  color: gray;
 }
