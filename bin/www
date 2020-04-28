@@ -99,7 +99,11 @@ io.listen(server);
 var user = 1 ;
 var users = [];
 io.on('connection', function (socket) {
-  io.emit("user joined", user++);
+  io.emit("user counter", user++);
+
+  socket.on("user new message", (data) => {
+    socket.broadcast.emit("show new message", data);
+  })
 
   socket.on("user joined chat", (user)=> {
     users.push(user);
