@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header row">
+        <div class="col-12 d-flex">
+          <a href="/" class="home flex-grow-1 d-flex">
+            <img src="/images/logo.png" alt="One Tube Logo"> 
+            <h1 class="title">OneTube</h1>
+          </a>
+          <button type="submit" class="btn btn-outline-light sync">SYNC</button>
+        </div>
+      </div>
+      <div class="row">
+        <form class="col-lg-8 url-input">
+            <div class="form-group d-flex">
+              <input type="url" class="form-control url-main" aria-describedby="youtubeURL" placeholder="Paste Youtube Video URL..." required>
+              <button type="reset" class="btn btn-outline-light url-reset">&times;</button>
+              <button type="button" class="btn btn-outline-light url-load">LOAD</button>
+            </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-lg-8" id="player"></div>
+        <div class="col-lg-4">
+          <div class="chatbox">
+            <div class="card user-count">
+              <div class="card-body">
+                Connected : <span class="users">1</span>
+              </div>
+            </div>
+            <div class="chat-area">
+              <ul class="chat-list"></ul>
+            </div>
+            <form class="main-input">
+              <div class="form-group d-flex">
+                <input type="text" class="form-control username" aria-describedby="youtubeURL" placeholder="Enter Your Name..." required>
+                <button type="reset" class="btn btn-outline-light">&times;</button>
+                <button type="button" class="btn btn-outline-light user-join">JOIN</button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="/javascript/bootstrap.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/player.js"></script>
+    <script src="/javascripts/chatbox.js"></script>
+  </body>
+</html>
