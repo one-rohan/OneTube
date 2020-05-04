@@ -96,11 +96,19 @@ function onListening() {
 var io = require('socket.io')(server);
 io.listen(server);
 
-var user = 1 ;
-var users = [];
+var rooms = {};
 io.on('connection', function (socket) {
-  io.emit("user counter", user++);
-
+  
+  socket.on('new user', (data) => {
+    socket.join(data);
+    if(rooms.hasOwnProperty(data)) {
+      rooms[data]++;
+    }else
+      rooms[data]=1;
+    io.in(data).emit('user counter', rooms[data]);
+  });
+  console.log(rooms);
+  
   socket.on("user new message", (data) => {
     socket.broadcast.emit("show new message", data);
   })

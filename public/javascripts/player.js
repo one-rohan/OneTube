@@ -1,5 +1,4 @@
 var player;
-const socket = io.connect();
 
 let videoState = {
   videoId: "",
