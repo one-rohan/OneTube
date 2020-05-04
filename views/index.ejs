@@ -8,7 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
   </head>
   <body>
+    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
     <div class="container">
+      <% include ../partials/room %>
       <div class="header row">
         <div class="col-12 d-flex">
           <a href="/" class="home flex-grow-1 d-flex">
@@ -33,7 +36,7 @@
           <div class="chatbox">
             <div class="card user-count">
               <div class="card-body">
-                Connected : <span class="users">1</span>
+                Connected : <span class="users">0</span>
               </div>
             </div>
             <div class="chat-area">
@@ -50,7 +53,6 @@
       </div>
     </div>
     </div>
-    <script src="/javascript/bootstrap.min.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/socket.js"></script>

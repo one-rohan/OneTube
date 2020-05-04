@@ -26,7 +26,7 @@ body {
 }
 
 .header img {
-  height: 60px;
+  height: 55px;
   width: 60px;
 }
 
@@ -128,4 +128,17 @@ body {
 
 .chatbox .name {
   color: gray;
+}
+
+.modal .modal-content {
+  background: #18151a;
+}
+
+.modal .modal-title {
+  line-height: 0;
+  font-family:'Pathway Gothic One', sans-serif;
+}
+
+.modal .modal-header {
+  justify-content: center;
 }
