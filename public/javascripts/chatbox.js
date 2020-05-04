@@ -27,9 +27,11 @@ joinBtn.addEventListener("click", (e) => {
 });
 
 
-socket.on('user counter', (user) => {
+socket.on('user counter', (user, name) => {
     let userCount =  document.querySelector(".user-count .users");
+    let roomName = document.querySelector(".user-count .roomname");
     userCount.innerHTML = user;
+    roomName.innerHTML = name;
 });
 
 socket.on("show new user", (username) => {

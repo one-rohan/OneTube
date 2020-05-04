@@ -99,13 +99,13 @@ io.listen(server);
 var rooms = {};
 io.on('connection', function (socket) {
   
-  socket.on('new user', (data) => {
-    socket.join(data);
-    if(rooms.hasOwnProperty(data)) {
-      rooms[data]++;
+  socket.on('new user', (name) => {
+    socket.join(name);
+    if(rooms.hasOwnProperty(name)) {
+      rooms[name]++;
     }else
-      rooms[data]=1;
-    io.in(data).emit('user counter', rooms[data]);
+      rooms[name]=1;
+    io.in(name).emit('user counter', rooms[name], name);
   });
   console.log(rooms);
   
@@ -114,7 +114,7 @@ io.on('connection', function (socket) {
   })
 
   socket.on("user joined chat", (user)=> {
-    users.push(user);
+    //users.push(user);
     socket.broadcast.emit("show new user", user);
   });
 
