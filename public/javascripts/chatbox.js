@@ -1,28 +1,35 @@
 const joinBtn = document.querySelector(".user-join");
 const chatList = document.querySelector(".chat-list");
 const chatInput = document.getElementById("chatInput");
-let isJoined = false;
-let username = "";
+
+let user = {
+    roomname: '',
+    username: '',
+    isJoined: false,
+    message: ''
+}
 
 const joinSend = () => {
     const newNode = document.createElement("li");
     const usernameVal = document.querySelector(".username");
 
-    if (!isJoined) {
-        username = document.querySelector(".username").value;
+    if (!user.isJoined) {
+        user.roomname = sessionStorage.getItem('roomname');
+        user.username = document.querySelector(".username").value;
         newNode.classList.add("user-joined");
         newNode.innerHTML = 'You have joined the chat.';
         chatList.appendChild(newNode);
         usernameVal.value = "";
         usernameVal.placeholder = "Type Your Message...";
         joinBtn.innerHTML = "SEND";
-        isJoined = true;
-        socket.emit("user joined chat", username);
+        user.isJoined = true;
+        socket.emit("user joined chat", user);
     } else {
         newNode.classList.add("user-msg");
         newNode.innerHTML = '<span class="name">You: </span>'+ usernameVal.value;
         chatList.appendChild(newNode);
-        socket.emit("user new message", {username: username, message: usernameVal.value});
+        user.message = usernameVal.value;
+        socket.emit("user new message", user);
         usernameVal.value = "";
     }
 }
@@ -49,16 +56,9 @@ socket.on("show new user", (username) => {
     chatList.appendChild(newNode);
 });
 
-socket.on("show new message", (message) => {
+socket.on("show new message", (user) => {
     const newNode = document.createElement("li");
     newNode.classList.add("user-msg");
-    newNode.innerHTML = '<span class="name">'+message.username+': </span>'+ message.message;
-    chatList.appendChild(newNode);
-});
-
-socket.on("disconnect", (data) => {
-    const newNode = document.createElement("li");
-    newNode.classList.add("user-joined");
-    newNode.innerHTML = username + ' has left the chat.';
+    newNode.innerHTML = '<span class="name">'+user.username+': </span>'+ user.message;
     chatList.appendChild(newNode);
 });

@@ -27,11 +27,15 @@ function onPlayerStateChange(e) {
 }
 
 const loadVideo = () => {
-  const url = document.querySelector('.url-main').value;
-  const vid = url.substr(url.length - 11);
-  videoState.videoId = vid;
-  socket.emit("loadVideo", videoState);
-  player.loadVideoById(vid,0);
+  const url = document.querySelector('.url-main');
+  if(url.value) {
+    const vid = url.value.substr(url.value.length - 11);
+    videoState.videoId = vid;
+    videoState.roomname = sessionStorage.getItem('roomname');
+    socket.emit("loadVideo", videoState);
+    player.loadVideoById(vid,0);
+    url.innerHTML = ''
+  }
 }
 
 loadButton.addEventListener('click', loadVideo);
@@ -44,6 +48,7 @@ loadInput.addEventListener('keypress', (e) => {
 
 document.querySelector(".sync").addEventListener('click', () => {
   videoState.time = player.getCurrentTime();
+  videoState.roomname = sessionStorage.getItem('roomname');
   socket.emit("stateSync", videoState);
 });
 

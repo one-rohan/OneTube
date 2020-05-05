@@ -109,20 +109,20 @@ io.on('connection', function (socket) {
   });
   console.log(rooms);
   
-  socket.on("user new message", (data) => {
-    socket.broadcast.emit("show new message", data);
+  socket.on("user new message", (user) => {
+    socket.to(user.roomname).emit("show new message", user);
   })
 
   socket.on("user joined chat", (user)=> {
-    //users.push(user);
-    socket.broadcast.emit("show new user", user);
+    socket.to(user.roomname).emit("show new user", user.username);
   });
 
   socket.on("stateSync", (state) => {
-    socket.broadcast.emit("updateState", state);
+    console.log(state);
+    socket.to(state.roomname).emit("updateState", state);
   });
 
   socket.on("loadVideo", (state) => {
-    socket.broadcast.emit("loadVideoId", state);
+    socket.to(state.roomname).emit("loadVideoId", state);
   });
 });
