@@ -13,7 +13,7 @@ const joinSend = () => {
     const newNode = document.createElement("li");
     const usernameVal = document.querySelector(".username");
 
-    if (!user.isJoined) {
+    if (!user.isJoined && usernameVal.value) {
         user.roomname = sessionStorage.getItem('roomname');
         user.username = document.querySelector(".username").value;
         newNode.classList.add("user-joined");
@@ -24,7 +24,7 @@ const joinSend = () => {
         joinBtn.innerHTML = "SEND";
         user.isJoined = true;
         socket.emit("user joined chat", user);
-    } else {
+    } else if (usernameVal.value) {
         newNode.classList.add("user-msg");
         newNode.innerHTML = '<span class="name">You: </span>'+ usernameVal.value;
         chatList.appendChild(newNode);
