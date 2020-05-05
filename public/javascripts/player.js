@@ -1,6 +1,7 @@
 var player;
 
 let videoState = {
+  roomname: "",
   videoId: "",
   state: -1,
   time: 0
@@ -27,7 +28,7 @@ function onPlayerStateChange(e) {
 
 const loadVideo = () => {
   const url = document.querySelector('.url-main').value;
-  const vid = url.substr(url.indexOf("=")+1);
+  const vid = url.substr(url.length - 11);
   videoState.videoId = vid;
   socket.emit("loadVideo", videoState);
   player.loadVideoById(vid,0);
