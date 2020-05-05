@@ -6,6 +6,9 @@ let videoState = {
   time: 0
 };
 
+const loadButton = document.querySelector(".url-load");
+const loadInput = document.getElementById("urlMain");
+
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '390',
@@ -22,12 +25,20 @@ function onPlayerStateChange(e) {
     videoState.state = e.data;
 }
 
-document.querySelector(".url-load").addEventListener('click', (e) => {
+const loadVideo = () => {
   const url = document.querySelector('.url-main').value;
   const vid = url.substr(url.indexOf("=")+1);
   videoState.videoId = vid;
   socket.emit("loadVideo", videoState);
-  player.loadVideoById(vid,0); 
+  player.loadVideoById(vid,0);
+}
+
+loadButton.addEventListener('click', loadVideo);
+loadInput.addEventListener('keypress', (e) => {
+  if(e.keyCode === 13) {
+    e.preventDefault();
+    loadVideo();
+  }
 });
 
 document.querySelector(".sync").addEventListener('click', () => {

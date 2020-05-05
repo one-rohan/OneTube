@@ -1,9 +1,10 @@
-let joinBtn = document.querySelector(".user-join");
-let chatList = document.querySelector(".chat-list");
+const joinBtn = document.querySelector(".user-join");
+const chatList = document.querySelector(".chat-list");
+const chatInput = document.getElementById("chatInput");
 let isJoined = false;
 let username = "";
 
-joinBtn.addEventListener("click", (e) => {
+const joinSend = () => {
     const newNode = document.createElement("li");
     const usernameVal = document.querySelector(".username");
 
@@ -24,8 +25,15 @@ joinBtn.addEventListener("click", (e) => {
         socket.emit("user new message", {username: username, message: usernameVal.value});
         usernameVal.value = "";
     }
-});
+}
 
+joinBtn.addEventListener("click", joinSend);
+chatInput.addEventListener('keypress', e => {
+    if(e.keyCode === 13) {
+        e.preventDefault();
+        joinSend();
+    }
+});
 
 socket.on('user counter', (user, name) => {
     let userCount =  document.querySelector(".user-count .users");

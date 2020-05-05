@@ -142,3 +142,7 @@ body {
 .modal .modal-header {
   justify-content: center;
 }
+
+.modal .room-join {
+  width: 100%;
+}

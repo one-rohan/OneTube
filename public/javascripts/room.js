@@ -8,10 +8,13 @@ window.addEventListener('load', () => {
     roomModal.modal('show');
 });
 
-roomJoin.on('click', function() {
+const joinRoom = () => {
     roomName = $('input.roomname').val().toString().trim();
     if(roomName) {
         socket.emit("new user", roomName);
         roomModal.modal('hide');
     }
-});
+}
+
+roomJoin.on('click', joinRoom);
+
