@@ -108,7 +108,6 @@ io.on('connection', function (socket) {
     rooms[name].users.push(socket.id);
     rooms[name].count = rooms[name].users.length;
     io.in(name).emit('user counter', rooms[name].count, name);
-    console.log(rooms);
   });
   
   socket.on("user new message", (user) => {
@@ -120,7 +119,6 @@ io.on('connection', function (socket) {
   });
 
   socket.on("stateSync", (state) => {
-    console.log(state);
     socket.to(state.roomname).emit("updateState", state);
   });
 
@@ -140,6 +138,5 @@ io.on('connection', function (socket) {
         }
       }
     }
-    console.log(rooms);
   });
 });
