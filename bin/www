@@ -92,22 +92,24 @@ function onListening() {
 /**
  * Socket.IO Setup
  */
-//server = app.listen(port);
+
 var io = require('socket.io')(server);
 io.listen(server);
 
-var rooms = {};
+var rooms = [];
 io.on('connection', function (socket) {
-  
   socket.on('new user', (name) => {
     socket.join(name);
-    if(rooms.hasOwnProperty(name)) {
-      rooms[name]++;
-    }else
-      rooms[name]=1;
-    io.in(name).emit('user counter', rooms[name], name);
+    if(!rooms.hasOwnProperty(name)) {
+      rooms[name] = {};
+      rooms[name].count = 0;
+      rooms[name].users = [];
+    }
+    rooms[name].users.push(socket.id);
+    rooms[name].count = rooms[name].users.length;
+    io.in(name).emit('user counter', rooms[name].count, name);
+    console.log(rooms);
   });
-  console.log(rooms);
   
   socket.on("user new message", (user) => {
     socket.to(user.roomname).emit("show new message", user);
@@ -124,5 +126,20 @@ io.on('connection', function (socket) {
 
   socket.on("loadVideo", (state) => {
     socket.to(state.roomname).emit("loadVideoId", state);
+  });
+
+  socket.on("disconnect", () => {
+    for(let key of Object.keys(rooms)) {
+      if(rooms[key].users.indexOf(socket.id) !== -1) {
+        rooms[key].users.splice(rooms[key].users.indexOf(socket.id), 1);
+        rooms[key].count = rooms[key].users.length;
+        if(rooms[key].count === 0) {
+          delete rooms[key];  
+        } else {
+          io.in(key).emit('user counter', rooms[key].count, key);
+        }
+      }
+    }
+    console.log(rooms);
   });
 });

@@ -1,6 +1,8 @@
 const joinBtn = document.querySelector(".user-join");
 const chatList = document.querySelector(".chat-list");
 const chatInput = document.getElementById("chatInput");
+const userCount =  document.querySelector(".user-count .users");
+const roomsname = document.querySelector(".user-count .roomname");
 
 let user = {
     roomname: '',
@@ -42,11 +44,9 @@ chatInput.addEventListener('keypress', e => {
     }
 });
 
-socket.on('user counter', (user, name) => {
-    let userCount =  document.querySelector(".user-count .users");
-    let roomName = document.querySelector(".user-count .roomname");
-    userCount.innerHTML = user;
-    roomName.innerHTML = name;
+socket.on('user counter', (count, name) => {
+    userCount.innerHTML = count;
+    roomsname.innerHTML = name;
 });
 
 socket.on("show new user", (username) => {
