@@ -92,29 +92,54 @@ function onListening() {
 /**
  * Socket.IO Setup
  */
-//server = app.listen(port);
+
 var io = require('socket.io')(server);
 io.listen(server);
 
-var user = 1 ;
-var users = [];
+var rooms = [];
 io.on('connection', function (socket) {
-  io.emit("user counter", user++);
-
-  socket.on("user new message", (data) => {
-    socket.broadcast.emit("show new message", data);
+  socket.on('new user', (name) => {
+    socket.join(name);
+    if(!rooms.hasOwnProperty(name)) {
+      rooms[name] = {};
+      rooms[name].count = 0;
+      rooms[name].users = [];
+    }
+    rooms[name].users.push(socket.id);
+    rooms[name].count = rooms[name].users.length;
+    io.in(name).emit('user counter', rooms[name].count, name);
+    console.log(rooms);
+  });
+  
+  socket.on("user new message", (user) => {
+    socket.to(user.roomname).emit("show new message", user);
   })
 
   socket.on("user joined chat", (user)=> {
-    users.push(user);
-    socket.broadcast.emit("show new user", user);
+    socket.to(user.roomname).emit("show new user", user.username);
   });
 
   socket.on("stateSync", (state) => {
-    socket.broadcast.emit("updateState", state);
+    console.log(state);
+    socket.to(state.roomname).emit("updateState", state);
   });
 
   socket.on("loadVideo", (state) => {
-    socket.broadcast.emit("loadVideoId", state);
+    socket.to(state.roomname).emit("loadVideoId", state);
+  });
+
+  socket.on("disconnect", () => {
+    for(let key of Object.keys(rooms)) {
+      if(rooms[key].users.indexOf(socket.id) !== -1) {
+        rooms[key].users.splice(rooms[key].users.indexOf(socket.id), 1);
+        rooms[key].count = rooms[key].users.length;
+        if(rooms[key].count === 0) {
+          delete rooms[key];  
+        } else {
+          io.in(key).emit('user counter', rooms[key].count, key);
+        }
+      }
+    }
+    console.log(rooms);
   });
 });

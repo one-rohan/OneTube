@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
     <div class="container">
+      <% include ../partials/room %>
       <div class="header row">
         <div class="col-12 d-flex">
           <a href="/" class="home flex-grow-1 d-flex">
@@ -20,7 +25,7 @@
       <div class="row">
         <form class="col-lg-8 url-input">
             <div class="form-group d-flex">
-              <input type="url" class="form-control url-main" aria-describedby="youtubeURL" placeholder="Paste Youtube Video URL..." required>
+              <input type="url" id="urlMain" class="form-control url-main" aria-describedby="youtubeURL" placeholder="Paste Youtube Video URL..." required>
               <button type="reset" class="btn btn-outline-light url-reset">&times;</button>
               <button type="button" class="btn btn-outline-light url-load">LOAD</button>
             </div>
@@ -29,29 +34,14 @@
       <div class="row">
         <div class="col-lg-8" id="player"></div>
         <div class="col-lg-4">
-          <div class="chatbox">
-            <div class="card user-count">
-              <div class="card-body">
-                Connected : <span class="users">1</span>
-              </div>
-            </div>
-            <div class="chat-area">
-              <ul class="chat-list"></ul>
-            </div>
-            <form class="main-input">
-              <div class="form-group d-flex">
-                <input type="text" class="form-control username" aria-describedby="youtubeURL" placeholder="Enter Your Name..." required>
-                <button type="reset" class="btn btn-outline-light">&times;</button>
-                <button type="button" class="btn btn-outline-light user-join">JOIN</button>
-              </div>
-            </form>
-        </div>
+          <% include ../partials/chatbox %>
       </div>
     </div>
+      <% include ../partials/footer %>
     </div>
-    <script src="/javascript/bootstrap.min.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/room.js"></script>
     <script src="/javascripts/player.js"></script>
     <script src="/javascripts/chatbox.js"></script>
   </body>

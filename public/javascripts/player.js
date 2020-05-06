@@ -1,11 +1,14 @@
 var player;
-const socket = io.connect();
 
 let videoState = {
+  roomname: "",
   videoId: "",
   state: -1,
   time: 0
 };
+
+const loadButton = document.querySelector(".url-load");
+const loadInput = document.getElementById("urlMain");
 
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
@@ -23,16 +26,29 @@ function onPlayerStateChange(e) {
     videoState.state = e.data;
 }
 
-document.querySelector(".url-load").addEventListener('click', (e) => {
-  const url = document.querySelector('.url-main').value;
-  const vid = url.substr(url.indexOf("=")+1);
-  videoState.videoId = vid;
-  socket.emit("loadVideo", videoState);
-  player.loadVideoById(vid,0); 
+const loadVideo = () => {
+  const url = document.querySelector('.url-main');
+  if(url.value) {
+    const vid = url.value.substr(url.value.length - 11);
+    videoState.videoId = vid;
+    videoState.roomname = sessionStorage.getItem('roomname');
+    socket.emit("loadVideo", videoState);
+    player.loadVideoById(vid,0);
+    url.innerHTML = ''
+  }
+}
+
+loadButton.addEventListener('click', loadVideo);
+loadInput.addEventListener('keypress', (e) => {
+  if(e.keyCode === 13) {
+    e.preventDefault();
+    loadVideo();
+  }
 });
 
 document.querySelector(".sync").addEventListener('click', () => {
   videoState.time = player.getCurrentTime();
+  videoState.roomname = sessionStorage.getItem('roomname');
   socket.emit("stateSync", videoState);
 });
 

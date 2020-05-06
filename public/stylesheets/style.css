@@ -17,7 +17,6 @@ body {
 .header {
   margin-top: 10px;
   border-bottom: 1px solid white;
-  animation: borderColor 5s infinite;
 }
 
 .header .home {
@@ -26,8 +25,8 @@ body {
 }
 
 .header img {
-  height: 60px;
-  width: 60px;
+  height: 45px;
+  width: 45px;
 }
 
 .header .title {
@@ -64,15 +63,6 @@ body {
   border: 1px solid;
   border-color: #e9190f;
   box-shadow: none;
-}
-
-@keyframes borderColor {
-  0%   {border-color: red;}
-  20%  {border-color: palevioletred;}
-  40%  {border-color: cyan;}
-  60%  {border-color: orange;}
-  80%  {border-color: purple;}
-  100% {border-color: red;}
 }
 
 .chatbox {
@@ -128,4 +118,44 @@ body {
 
 .chatbox .name {
   color: gray;
+}
+
+.modal .modal-content {
+  background: #18151a;
+}
+
+.modal .modal-title {
+  line-height: 0;
+  font-family:'Pathway Gothic One', sans-serif;
+}
+
+.modal .modal-header {
+  justify-content: center;
+}
+
+.modal .room-join {
+  width: 100%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+}
+
+@media only screen and (max-width: 592px) {
+  footer {
+    bottom: initial;
+  }
+
+  .chatbox .chat-area {
+    height: 150px;
+  }
+}
+
+footer a{
+  color: #e9190f;
+}
+
+footer h6 {
+  font-size: 10px;
 }
